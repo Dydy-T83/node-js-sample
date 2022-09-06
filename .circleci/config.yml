@@ -22,6 +22,15 @@ jobs:
     steps:
       - checkout
       - run: echo "this is the test job"
+  push:
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - run: 
+          name: Push Docker image 
+          command: |
+            docker push rudytomatis83/reponodejssample:tagname  
 
 # Orchestrate our job run sequence      
 workflows:
@@ -31,3 +40,6 @@ workflows:
       - tests:
           requires:
             - build
+      - psuh:
+          requires:
+            - tests
