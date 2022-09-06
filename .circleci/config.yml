@@ -30,7 +30,7 @@ jobs:
       - run: 
           name: Push Docker image 
           command: |
-            docker push rudytomatis83/reponodejssample:tagname  
+            docker push rudytomatis83/reponodejssample  
 
 # Orchestrate our job run sequence      
 workflows:
@@ -40,6 +40,6 @@ workflows:
       - tests:
           requires:
             - build
-      - psuh:
+      - push:
           requires:
             - tests
