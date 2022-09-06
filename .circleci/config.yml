@@ -1,0 +1,21 @@
+version: 2
+jobs:
+  build:
+    working_directory: /usr/src/app
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build application Docker image
+          command: |
+            docker build . -t rudytomatis83/node-web-app2 
+      - run:
+          name: Save Docker image layer cache
+          command: |
+            docker run -p 8080:8080 -d rudytomatis83/node-web-app2
+  tests:
+    docker:
+      - image: docker:17.05.0-ce-git
+      
