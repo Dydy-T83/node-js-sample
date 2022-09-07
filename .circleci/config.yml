@@ -1,6 +1,13 @@
 version: 2.1
 # Define the jobs we want to run for this project
 jobs:
+  tests:
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: echo "this is the test job"
   build:
     working_directory: /usr/src/app
     docker:
@@ -16,31 +23,20 @@ jobs:
           name: Save Docker image layer cache
           command: |
             docker run -p 8080:8080 -d rudytomatis83/node-web-app2
-  tests:
-    docker:
-      - image: docker:17.05.0-ce-git
-    steps:
-      - checkout
-      - run: echo "this is the test job"
-  push:
-    docker:
-      - image: docker:17.05.0-ce-git
-    steps:
-      - checkout
       - run: 
           name: Push Docker image 
           command: |
-            echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_LOGIN" -p "$DOCKERHUB_PASSWORD"
-            docker push $DOCKERHUB_LOGIN/reponodejssample:latest  
+            echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_LOGIN" --password-stdin
+            docker push $DOCKERHUB_LOGIN/reponodejssample:latest
+  
+        
 
 # Orchestrate our job run sequence      
 workflows:
   build_and_test:
     jobs:
-      - build
-      - tests:
-          requires:
-            - build
-      - push:
+      - tests
+      - build:
           requires:
             - tests
+            
