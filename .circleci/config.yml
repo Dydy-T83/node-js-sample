@@ -30,7 +30,7 @@ jobs:
       - run: 
           name: Push Docker image 
           command: |
-            docker push rudytomatis83/reponodejssample:latest  
+            docker push $DOCKERHUB_LOGIN/reponodejssample:latest  
 
 # Orchestrate our job run sequence      
 workflows:
