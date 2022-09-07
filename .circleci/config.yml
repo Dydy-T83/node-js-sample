@@ -17,16 +17,16 @@ jobs:
       - run:
           name: Build application Docker image
           command: |
-            docker build . -t rudytomatis83/node-web-app2 
+            docker build . -t rudytomatis83/imagedockerjs 
       - run:
           name: Save Docker image layer cache
           command: |
-            docker run -p 8080:8080 -d rudytomatis83/node-web-app2
+            docker run -p 8080:8080 -d rudytomatis83/imagedockerjs
       - run: 
           name: Push Docker image 
           command: |
             echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_LOGIN" --password-stdin
-            docker push $DOCKERHUB_LOGIN/reponodejssample:latest
+            docker push $DOCKERHUB_LOGIN/imagedockerjs:latest
   
         
 
