@@ -17,11 +17,11 @@ jobs:
       - run:
           name: Build application Docker image
           command: |
-            docker build . -t rudytomatis83/imagedockerjs 
+            docker build . -t $DOCKERHUB_LOGIN/imagedockerjs 
       - run:
           name: Save Docker image layer cache
           command: |
-            docker run -p 8080:8080 -d rudytomatis83/imagedockerjs
+            docker run -p 8080:8080 -d $DOCKERHUB_LOGIN/imagedockerjs
       - run: 
           name: Push Docker image 
           command: |
